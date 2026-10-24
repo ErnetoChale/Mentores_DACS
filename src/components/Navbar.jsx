@@ -12,7 +12,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
           >
             {/* Logo de Mentores DACS */}
             <img 
-              src="/logo.png" 
+              src={`${import.meta.env.BASE_URL}images/logo.png`}
               alt="Logo Mentores DACS" 
               className="h-10 w-auto object-contain"
               onError={(e) => {
