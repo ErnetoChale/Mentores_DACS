@@ -1,108 +1,179 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
 import ManualesList from './components/ManualesList';
-import { PROGRAMA_INFO } from './data/mentoresData';
-import { Building2, ShieldCheck, HeartHandshake, CheckCircle2 } from 'lucide-react';
+import Footer from './components/Footer';
+import Actividades from './components/Actividades';
+import Mentores from './components/Mentores';
+import Videos from './components/Videos';
+import Participar from './components/Participar';
+import { PROGRAMA_INFO, DRIVE_FOLDER_URL } from './data/mentoresData';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+
+const PILARES = [
+  {
+    titulo: 'Acompañamiento académico',
+    texto:
+      'Asesoría y guía entre pares orientada al fortalecimiento de competencias disciplinares e integración a la vida universitaria.',
+  },
+  {
+    titulo: 'Alineación institucional',
+    texto:
+      'Lineamientos, formatos y procesos estandarizados bajo la supervisión de la Coordinación de Docencia de la DACS.',
+  },
+];
+
+const OBJETIVOS = [
+  'Reducir los índices de rezago e inserción en los primeros semestres.',
+  'Promover el desarrollo integral y el bienestar de los estudiantes de salud.',
+];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('manuales');
-
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+    <div className="min-h-screen flex flex-col bg-white text-ink font-sans">
+      <Navbar />
 
-      {/* Banner Principal */}
-      <section 
-        style={{ backgroundColor: '#0a7429' }} 
-        className="text-white py-10 px-4 sm:px-6 lg:px-8 border-b-4 border-[#9dc112]"
-      >
-        <div className="max-w-7xl mx-auto space-y-2.5">
-          <div 
-            style={{ color: '#9dc112' }} 
-            className="inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider"
-          >
-            <Building2 className="w-3.5 h-3.5" />
-            <span>{PROGRAMA_INFO.institucion}</span>
-          </div>
-          <h2 className="font-heading text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            {PROGRAMA_INFO.titulo}
-          </h2>
-          <p className="text-emerald-100 max-w-3xl text-xs sm:text-sm leading-relaxed">
-            {PROGRAMA_INFO.descripcion}
-          </p>
-        </div>
-      </section>
-
-      {/* Contenido Principal */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'manuales' ? (
-          <div className="space-y-5">
-            <div className="border-b border-slate-200 pb-4 flex justify-between items-end">
-              <div>
-                <h3 className="font-heading text-lg font-bold text-slate-900">Documentación Operativa y Guías</h3>
-                <p className="text-xs text-slate-500 mt-0.5">Repositorio oficial de recursos normativos para mentores y tutorados.</p>
-              </div>
-            </div>
-            <ManualesList />
-          </div>
-        ) : (
-          <div className="bg-white rounded-xl border border-slate-200/80 p-6 sm:p-8 space-y-6 max-w-4xl mx-auto shadow-xs">
-            <div className="border-b border-slate-100 pb-4">
-              <h3 className="font-heading text-xl font-bold text-slate-900">Estructura del Programa de Mentorías</h3>
-              <p className="text-xs text-slate-500 mt-1">Estrategia institucional de orientación y desarrollo estudiantil en ciencias de la salud.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/60 space-y-2">
-                <div className="flex items-center space-x-2 text-slate-900 font-semibold text-sm">
-                  <HeartHandshake className="w-4 h-4" style={{ color: '#04922d' }} />
-                  <span>Acompañamiento Académico</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Asesoría y guía entre pares orientada al fortalecimiento de competencias disciplinares e integración a la vida universitaria.
-                </p>
-              </div>
-
-              <div className="p-4 bg-slate-50 rounded-lg border border-slate-200/60 space-y-2">
-                <div className="flex items-center space-x-2 text-slate-900 font-semibold text-sm">
-                  <ShieldCheck className="w-4 h-4" style={{ color: '#04922d' }} />
-                  <span>Alineación Institucional</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Lineamientos, formatos y procesos estandarizados bajo la supervisión de la Coordinación de Docencia de la DACS.
-                </p>
+      <main className="flex-1">
+        {/* Portada */}
+        <section id="inicio" className="bg-brand text-white scroll-mt-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid gap-12 lg:grid-cols-3 lg:items-end">
+            <div className="lg:col-span-2">
+              <p className="text-sm font-semibold uppercase tracking-widest text-accent">
+                {PROGRAMA_INFO.institucion}
+              </p>
+              <h1 className="font-heading text-4xl sm:text-6xl font-bold leading-[1.05] mt-4">
+                {PROGRAMA_INFO.titulo}
+              </h1>
+              <p className="mt-6 text-lg sm:text-xl text-white/90 max-w-2xl leading-relaxed">
+                {PROGRAMA_INFO.descripcion}
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a
+                  href="#manuales"
+                  className="inline-flex items-center gap-2 bg-white text-brand px-6 py-3 text-sm font-bold hover:bg-accent hover:text-brand-dark transition-colors"
+                >
+                  Consultar manuales
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </a>
+                <a
+                  href="#programa"
+                  className="inline-flex items-center gap-2 border border-white/60 px-6 py-3 text-sm font-bold hover:bg-white/10 transition-colors"
+                >
+                  Conocer el programa
+                </a>
               </div>
             </div>
 
-            <div 
-              style={{ backgroundColor: '#f9fbe8', borderColor: '#9dc112' }} 
-              className="p-4 rounded-lg border space-y-2"
-            >
-              <h4 style={{ color: '#0a7429' }} className="font-heading text-xs font-bold uppercase tracking-wide">
-                Objetivos Clave
-              </h4>
-              <ul className="text-xs text-slate-700 space-y-1.5 pt-1">
-                <li className="flex items-center space-x-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#04922d' }} />
-                  <span>Reducir los índices de rezago e inserción en los primeros semestres.</span>
+            <aside className="bg-brand-dark border-t-4 border-accent p-6" aria-label="Accesos rápidos">
+              <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-accent">
+                Accesos rápidos
+              </h2>
+              <ul className="mt-4 divide-y divide-white/15 text-sm font-semibold">
+                <li>
+                  <a href="#manuales" className="flex items-center justify-between py-3 hover:text-accent">
+                    Manuales y guías operativas
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </a>
                 </li>
-                <li className="flex items-center space-x-2">
-                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: '#04922d' }} />
-                  <span>Promover el desarrollo integral y el bienestar de los estudiantes de salud.</span>
+                <li>
+                  <a href="#programa" className="flex items-center justify-between py-3 hover:text-accent">
+                    Estructura del programa
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={DRIVE_FOLDER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between py-3 hover:text-accent"
+                  >
+                    Carpeta completa en Drive
+                    <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                  </a>
                 </li>
               </ul>
+            </aside>
+          </div>
+        </section>
+
+        {/* El programa */}
+        <section id="programa" className="scroll-mt-24 py-16 sm:py-20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
+              El programa
+            </p>
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 max-w-2xl leading-tight">
+              Estructura del Programa de Mentorías
+            </h2>
+            <p className="mt-4 text-lg text-stone-600 max-w-3xl leading-relaxed">
+              Estrategia institucional de orientación y desarrollo estudiantil en ciencias de la salud.
+            </p>
+
+            <div className="mt-12 grid gap-10 md:grid-cols-2">
+              {PILARES.map((pilar) => (
+                <article key={pilar.titulo} className="border-t-4 border-accent pt-5">
+                  <h3 className="font-heading text-2xl font-semibold text-brand">{pilar.titulo}</h3>
+                  <p className="mt-3 text-base text-stone-700 leading-relaxed">{pilar.texto}</p>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-14 bg-paper border-l-4 border-brand p-6 sm:p-8">
+              <h3 className="font-heading text-sm font-bold uppercase tracking-wider text-brand">
+                Objetivos clave
+              </h3>
+              <ol className="mt-5 space-y-4">
+                {OBJETIVOS.map((objetivo, i) => (
+                  <li key={objetivo} className="flex gap-4">
+                    <span className="font-heading text-2xl font-bold text-accent leading-none">
+                      {i + 1}
+                    </span>
+                    <span className="text-base text-stone-800 leading-relaxed">{objetivo}</span>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
-        )}
+        </section>
+
+        <Actividades />
+        <Mentores />
+        <Videos />
+
+        {/* Manuales */}
+        <section id="manuales" className="scroll-mt-24 bg-paper py-16 sm:py-20 border-t border-stone-200">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
+                  Documentación
+                </p>
+                <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 leading-tight">
+                  Manuales y documentos
+                </h2>
+                <p className="mt-3 text-lg text-stone-600 max-w-2xl leading-relaxed">
+                  Repositorio oficial de recursos normativos para mentores y tutorados.
+                </p>
+              </div>
+              <a
+                href={DRIVE_FOLDER_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-bold text-brand hover:text-brand-dark underline underline-offset-4"
+              >
+                Abrir carpeta en Google Drive
+                <ExternalLink className="w-4 h-4" aria-hidden="true" />
+              </a>
+            </div>
+
+            <ManualesList />
+          </div>
+        </section>
+
+        <Participar />
       </main>
 
-      {/* Pie de Página */}
-      <footer className="bg-white border-t border-slate-200 py-5 text-center text-xs text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p>© 2026 Universidad Juárez Autónoma de Tabasco — DACS.</p>
-          <p className="text-slate-400">Portal de Mentores v1.0</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

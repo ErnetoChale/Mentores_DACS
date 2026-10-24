@@ -74,9 +74,93 @@ export const MANUALES = [
   },
 ];
 
-// Datos de contacto para el pie de página. Deja vacío lo que no quieras mostrar.
+// ---------------------------------------------------------------------------
+// CONTACTO: aparece en el pie de página y en el menú. Deja vacío lo que no uses.
+// ---------------------------------------------------------------------------
 export const CONTACTO = {
   correo: "",
   telefono: "",
   direccion: "",
+};
+
+// ---------------------------------------------------------------------------
+// REDES SOCIALES: pega el enlace completo de cada perfil.
+// Las que dejes vacías no se muestran.
+// Ejemplo: instagram: "https://www.instagram.com/tu_usuario"
+// ---------------------------------------------------------------------------
+export const REDES = {
+  youtube: "",
+  instagram: "",
+  facebook: "",
+};
+
+// Obtiene el ID de un video a partir de cualquier enlace de YouTube
+// (watch?v=, youtu.be/, embed/ o shorts/) o del ID directo.
+export const getYoutubeId = (urlOrId) => {
+  if (!urlOrId) return "";
+  const match = urlOrId.match(
+    /(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([a-zA-Z0-9_-]{11})/
+  );
+  return match ? match[1] : urlOrId;
+};
+
+// ---------------------------------------------------------------------------
+// VIDEOS: si la lista está vacía, la sección no aparece.
+// "url" acepta el enlace del video de YouTube tal cual lo copias.
+//
+// Ejemplo:
+//  {
+//    id: "v1",
+//    titulo: "Introducción a la disección",
+//    descripcion: "Material de apoyo para las prácticas.",
+//    url: "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+//  },
+// ---------------------------------------------------------------------------
+export const VIDEOS = [];
+
+// ---------------------------------------------------------------------------
+// MENTORES: si la lista está vacía, la sección no aparece en el sitio.
+// Las fotos van en public/images/mentores/ (por ejemplo "ernesto.jpg").
+// Si no pones foto, se muestran las iniciales.
+//
+// Ejemplo (quita las // para usarlo):
+//  {
+//    id: "m1",
+//    nombre: "Nombre Apellido",
+//    semestre: "6.º semestre",
+//    area: "Anatomía y disección",
+//    foto: "nombre.jpg",
+//  },
+// ---------------------------------------------------------------------------
+export const MENTORES = [];
+
+// ---------------------------------------------------------------------------
+// ACTIVIDADES: si la lista está vacía, la sección no aparece.
+// La fecha va en formato AAAA-MM-DD. Se ordenan solas por fecha.
+//
+// Ejemplo:
+//  {
+//    id: "a1",
+//    titulo: "Taller de disección de ojo",
+//    fecha: "2026-11-12",
+//    hora: "10:00 h",
+//    lugar: "Anfiteatro de la DACS",
+//    descripcion: "Práctica guiada por los mentores del programa.",
+//  },
+// ---------------------------------------------------------------------------
+export const ACTIVIDADES = [];
+
+// ---------------------------------------------------------------------------
+// PARTICIPAR: pega aquí el enlace de tu formulario (Google Forms, por ejemplo).
+// Si dejas ambos enlaces vacíos, la sección no aparece.
+// ---------------------------------------------------------------------------
+export const PARTICIPAR = {
+  mentorado: {
+    descripcion: "Recibe acompañamiento académico de mentores de semestres avanzados.",
+    enlace: "",
+  },
+  mentor: {
+    descripcion: "Comparte tu experiencia y apoya a los estudiantes de nuevo ingreso.",
+    enlace: "",
+  },
 };

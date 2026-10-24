@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { PROGRAMA_INFO } from '../data/mentoresData';
+import {
+  PROGRAMA_INFO,
+  ACTIVIDADES,
+  MENTORES,
+  VIDEOS,
+  PARTICIPAR,
+  CONTACTO,
+} from '../data/mentoresData';
 
+// Solo aparecen en el menú las secciones que tienen contenido.
 const ENLACES = [
   { href: '#inicio', etiqueta: 'Inicio' },
   { href: '#programa', etiqueta: 'El programa' },
+  ACTIVIDADES.length > 0 && { href: '#actividades', etiqueta: 'Actividades' },
+  MENTORES.length > 0 && { href: '#mentores', etiqueta: 'Mentores' },
+  VIDEOS.length > 0 && { href: '#videos', etiqueta: 'Videos' },
   { href: '#manuales', etiqueta: 'Manuales' },
-];
+  (PARTICIPAR.mentorado.enlace || PARTICIPAR.mentor.enlace) && {
+    href: '#participar',
+    etiqueta: 'Participa',
+  },
+  (CONTACTO.correo || CONTACTO.telefono || CONTACTO.direccion) && {
+    href: '#contacto',
+    etiqueta: 'Contacto',
+  },
+].filter(Boolean);
 
 export default function Navbar() {
   const [abierto, setAbierto] = useState(false);
