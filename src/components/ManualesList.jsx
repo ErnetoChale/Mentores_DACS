@@ -1,99 +1,106 @@
 import React, { useState } from 'react';
-import { MANUALES } from '../data/mentoresData';
-import { Search, FileText, Download, Eye, Tag } from 'lucide-react';
+import { Search, FileText, Download, ExternalLink } from 'lucide-react';
+import { MANUALES, DRIVE_FOLDER_URL, driveView, driveDownload } from '../data/mentoresData';
 
 export default function ManualesList() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [busqueda, setBusqueda] = useState('');
+  const [categoria, setCategoria] = useState('Todos');
 
-  const categorias = ['Todos', ...new Set(MANUALES.map(m => m.categoria))];
+  const categorias = ['Todos', ...new Set(MANUALES.map((m) => m.categoria))];
 
-  const manualesFiltrados = MANUALES.filter(manual => {
-    const coincideBusqueda = manual.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                             manual.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
-    const coincideCategoria = selectedCategory === 'Todos' || manual.categoria === selectedCategory;
+  const filtrados = MANUALES.filter((manual) => {
+    const texto = `${manual.titulo} ${manual.descripcion}`.toLowerCase();
+    const coincideBusqueda = texto.includes(busqueda.toLowerCase());
+    const coincideCategoria = categoria === 'Todos' || manual.categoria === categoria;
     return coincideBusqueda && coincideCategoria;
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-        <div className="relative w-full sm:w-96">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Buscar manual o guía..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
-          />
-        </div>
-
-        <div className="flex items-center space-x-2 w-full sm:w-auto overflow-x-auto pb-2 sm:pb-0">
-          <Tag className="w-4 h-4 text-slate-400 flex-shrink-0" />
-          {categorias.map(cat => (
+    <div>
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 border-b border-stone-300 pb-5">
+        <div className="flex flex-wrap gap-x-6 gap-y-2" role="tablist" aria-label="Categorías">
+          {categorias.map((cat) => (
             <button
               key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-full transition-colors whitespace-nowrap ${
-                selectedCategory === cat
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              type="button"
+              role="tab"
+              aria-selected={categoria === cat}
+              onClick={() => setCategoria(cat)}
+              className={`pb-1 text-sm font-semibold border-b-2 transition-colors ${
+                categoria === cat
+                  ? 'text-brand border-accent'
+                  : 'text-stone-500 border-transparent hover:text-ink'
               }`}
             >
               {cat}
             </button>
           ))}
         </div>
+
+        <div className="relative w-full md:w-80">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" aria-hidden="true" />
+          <input
+            type="search"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            placeholder="Buscar un documento"
+            aria-label="Buscar un documento"
+            className="w-full bg-white border border-stone-300 pl-9 pr-3 py-2 text-sm placeholder:text-stone-400 focus:border-brand"
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {manualesFiltrados.map((manual) => (
-          <div key={manual.id} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-start justify-between">
-                <span className="inline-block px-2.5 py-0.5 text-xs font-semibold text-sky-800 bg-sky-100 rounded-full">
-                  {manual.categoria}
-                </span>
-                <span className="text-xs text-slate-400">{manual.fecha}</span>
-              </div>
+      <ul className="divide-y divide-stone-200">
+        {filtrados.map((manual) => {
+          const ver = manual.driveId ? driveView(manual.driveId) : DRIVE_FOLDER_URL;
+          const descargar = manual.driveId ? driveDownload(manual.driveId) : DRIVE_FOLDER_URL;
 
-              <div className="flex items-start space-x-3">
-                <FileText className="w-6 h-6 text-sky-600 flex-shrink-0 mt-1" />
+          return (
+            <li key={manual.id} className="py-6 grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+              <div className="flex gap-4">
+                <FileText className="w-6 h-6 text-brand shrink-0 mt-1" aria-hidden="true" />
                 <div>
-                  <h3 className="font-bold text-slate-800 text-base leading-snug">{manual.titulo}</h3>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">{manual.descripcion}</p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-brand-light">
+                    {manual.categoria}
+                  </p>
+                  <h3 className="font-heading text-xl font-semibold text-ink leading-snug mt-0.5">
+                    {manual.titulo}
+                  </h3>
+                  <p className="text-base text-stone-600 mt-1.5 max-w-2xl leading-relaxed">
+                    {manual.descripcion}
+                  </p>
                 </div>
               </div>
-            </div>
 
-            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-              <a
-                href={manual.archivo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center space-x-1 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition-colors"
-              >
-                <Eye className="w-3.5 h-3.5" />
-                <span>Visualizar</span>
-              </a>
-              <a
-                href={manual.archivo}
-                download
-                className="flex items-center justify-center p-2 bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-lg transition-colors"
-                title="Descargar PDF"
-              >
-                <Download className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
+              <div className="flex gap-3 md:pl-6">
+                <a
+                  href={ver}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-brand text-brand px-4 py-2 text-sm font-semibold hover:bg-brand hover:text-white transition-colors"
+                >
+                  <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                  Ver
+                </a>
+                <a
+                  href={descargar}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 text-sm font-semibold hover:bg-brand-dark transition-colors"
+                >
+                  <Download className="w-4 h-4" aria-hidden="true" />
+                  Descargar
+                </a>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
 
-      {manualesFiltrados.length === 0 && (
-        <div className="text-center py-12 bg-white rounded-xl border border-slate-200">
-          <p className="text-slate-500 text-sm">No se encontraron manuales que coincidan con la búsqueda.</p>
-        </div>
+      {filtrados.length === 0 && (
+        <p className="py-12 text-center text-stone-500 border-b border-stone-200">
+          No se encontraron documentos con esos criterios.
+        </p>
       )}
     </div>
   );
