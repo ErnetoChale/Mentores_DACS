@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import {
   PROGRAMA_INFO,
+  HISTORIA,
+  FUNDADORES,
+  GALERIA,
   ACTIVIDADES,
   MENTORES,
   VIDEOS,
@@ -9,10 +12,17 @@ import {
   CONTACTO,
 } from '../data/mentoresData';
 
+const hayHistoria =
+  (HISTORIA.parrafos || []).length > 0 ||
+  (HISTORIA.hitos || []).length > 0 ||
+  FUNDADORES.length > 0 ||
+  GALERIA.length > 0;
+
 // Solo aparecen en el menú las secciones que tienen contenido.
 const ENLACES = [
   { href: '#inicio', etiqueta: 'Inicio' },
   { href: '#programa', etiqueta: 'El programa' },
+  hayHistoria && { href: '#historia', etiqueta: 'Historia' },
   ACTIVIDADES.length > 0 && { href: '#actividades', etiqueta: 'Actividades' },
   MENTORES.length > 0 && { href: '#mentores', etiqueta: 'Mentores' },
   VIDEOS.length > 0 && { href: '#videos', etiqueta: 'Videos' },
@@ -42,23 +52,26 @@ export default function Navbar() {
       </div>
 
       <header className="sticky top-0 z-50 bg-white border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <a href="#inicio" className="flex items-center gap-4" aria-label="Ir al inicio">
-            <img src={logo} alt="Logo del Programa de Mentores DACS" className="h-14 w-auto" />
-            <span className="border-l border-stone-300 pl-4 leading-tight">
-              <span className="block font-heading text-xl font-bold text-brand">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
+          <a href="#inicio" className="flex items-center gap-4 min-w-0" aria-label="Ir al inicio">
+            <img src={logo} alt="Logo del Programa de Mentores DACS" className="h-14 w-auto shrink-0" />
+            <span className="border-l border-stone-300 pl-4 leading-tight min-w-0">
+              <span className="block font-heading text-xl font-bold text-brand whitespace-nowrap">
                 Mentores DACS
               </span>
-              <span className="block text-xs text-stone-500">{PROGRAMA_INFO.institucion}</span>
+              {/* En pantallas grandes la división ya aparece en la franja de arriba */}
+              <span className="block lg:hidden text-xs text-stone-500">
+                {PROGRAMA_INFO.institucion}
+              </span>
             </span>
           </a>
 
-          <nav className="hidden md:flex items-center gap-8" aria-label="Navegación principal">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-5" aria-label="Navegación principal">
             {ENLACES.map((enlace) => (
               <a
                 key={enlace.href}
                 href={enlace.href}
-                className="text-sm font-semibold text-ink hover:text-brand py-2 border-b-2 border-transparent hover:border-accent transition-colors"
+                className="whitespace-nowrap text-sm font-semibold text-ink hover:text-brand py-2 border-b-2 border-transparent hover:border-accent transition-colors"
               >
                 {enlace.etiqueta}
               </a>
@@ -67,7 +80,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="md:hidden p-2 text-ink"
+            className="lg:hidden p-2 text-ink"
             onClick={() => setAbierto(!abierto)}
             aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={abierto}
@@ -77,7 +90,7 @@ export default function Navbar() {
         </div>
 
         {abierto && (
-          <nav className="md:hidden border-t border-stone-200 bg-white" aria-label="Navegación móvil">
+          <nav className="lg:hidden border-t border-stone-200 bg-white" aria-label="Navegación móvil">
             <ul className="max-w-6xl mx-auto px-4 py-2">
               {ENLACES.map((enlace) => (
                 <li key={enlace.href}>

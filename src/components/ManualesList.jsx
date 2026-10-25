@@ -9,7 +9,7 @@ export default function ManualesList() {
   const categorias = ['Todos', ...new Set(MANUALES.map((m) => m.categoria))];
 
   const filtrados = MANUALES.filter((manual) => {
-    const texto = `${manual.titulo} ${manual.autores || ''}`.toLowerCase();
+    const texto = `${manual.titulo} ${manual.autores || ''} ${manual.registro || ''}`.toLowerCase();
     const coincideBusqueda = texto.includes(busqueda.toLowerCase());
     const coincideCategoria = categoria === 'Todos' || manual.categoria === categoria;
     return coincideBusqueda && coincideCategoria;
@@ -70,6 +70,14 @@ export default function ManualesList() {
                     <p className="text-sm text-stone-600 mt-1.5 max-w-2xl leading-relaxed">
                       <span className="font-semibold text-stone-700">Autores: </span>
                       {manual.autores}
+                    </p>
+                  )}
+                  {manual.registro && (
+                    <p className="text-sm text-stone-600 mt-1.5">
+                      <span className="font-semibold text-stone-700">
+                        Registro de derecho de autor:{' '}
+                      </span>
+                      {manual.registro}
                     </p>
                   )}
                 </div>
