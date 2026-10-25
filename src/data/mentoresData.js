@@ -7,13 +7,15 @@ export const PROGRAMA_INFO = {
     "Espacio de orientación, acompañamiento académico y desarrollo profesional para la comunidad estudiantil de la salud.",
 };
 
-// Carpeta de Google Drive con todos los manuales.
+// ---------------------------------------------------------------------------
+// GOOGLE DRIVE
+// ---------------------------------------------------------------------------
 export const DRIVE_FOLDER_URL =
   "https://drive.google.com/drive/folders/1t7Pb4bzcGpOhDExuXm-hYgAaQdPf-dYD?usp=sharing";
 
-// Acepta el enlace completo de Drive o solo el ID del archivo.
 export const getDriveId = (urlOrId) => {
   if (!urlOrId) return "";
+
   const match = urlOrId.match(/\/d\/([a-zA-Z0-9_-]+)/);
   return match ? match[1] : urlOrId;
 };
@@ -24,6 +26,9 @@ export const driveView = (urlOrId) =>
 export const driveDownload = (urlOrId) =>
   `https://drive.google.com/uc?export=download&id=${getDriveId(urlOrId)}`;
 
+// ---------------------------------------------------------------------------
+// MANUALES
+// ---------------------------------------------------------------------------
 export const MANUALES = [
   {
     id: "1",
@@ -41,7 +46,7 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "José Daniel Roche García, Karla del Socorro Celorio Méndez, Alejandro Ernesto Chale de la Cruz, Crystell Guadalupe Guzmán Priego, Joshua Javier Hidalgo Hernández, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
-    registro: "03-2026-010814394500-01.",
+    registro: "03-2026-010814394500-01",
     driveId:
       "https://drive.google.com/file/d/1tcaZa7ylIFpOvPn5zSu9YczhpEvOWdA6/view?usp=sharing",
   },
@@ -82,7 +87,8 @@ export const MANUALES = [
 // ---------------------------------------------------------------------------
 export const CONTACTO = {
   correo: "mentoriasdacsmed@gmail.com",
-  direccion: "Av. Coronel Gregorio Méndez Magaña #2838-A, Col. Tamulté, C.P. 86150, Villahermosa, Tabasco, México.",
+  direccion:
+    "Av. Coronel Gregorio Méndez Magaña #2838-A, Col. Tamulté, C.P. 86150, Villahermosa, Tabasco, México.",
 };
 
 // ---------------------------------------------------------------------------
@@ -96,19 +102,21 @@ export const REDES = {
 };
 
 // ---------------------------------------------------------------------------
-// YOUTUBE: obtiene el ID de un video a partir de su enlace o ID directo.
+// YOUTUBE
 // ---------------------------------------------------------------------------
 export const getYoutubeId = (urlOrId) => {
   if (!urlOrId) return "";
+
   const match = urlOrId.match(
     /(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([a-zA-Z0-9_-]{11})/
   );
+
   return match ? match[1] : urlOrId;
 };
 
-// Obtiene el ID de una lista de reproducción.
 export const getYoutubeListId = (urlOrId) => {
   if (!urlOrId) return "";
+
   const match = urlOrId.match(/[?&]list=([a-zA-Z0-9_-]+)/);
   return match ? match[1] : urlOrId;
 };
@@ -121,7 +129,8 @@ export const VIDEOS = [
     id: "curso-introduccion-medicina",
     titulo: "Curso de introducción a la medicina",
     descripcion: "Serie de videos del canal Mentorías DACS-UJAT.",
-    lista: "https://youtube.com/playlist?list=PLfxTL4EbiZaY&si=zas6kwcF8HPeVMmq",
+    lista:
+      "https://youtube.com/playlist?list=PLfxTL4EbiZaY&si=zas6kwcF8HPeVMmq",
   },
 ];
 
@@ -142,6 +151,9 @@ export const HISTORIA = {
   hitos: [],
 };
 
+// ---------------------------------------------------------------------------
+// FUNDADORES Y RESPONSABLES
+// ---------------------------------------------------------------------------
 export const FUNDADORES = [
   {
     id: "sergio-quiroz",
@@ -161,6 +173,70 @@ export const FUNDADORES = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// PRIMERA GENERACIÓN
+// Fotografías: public/images/fundadores/
+// ---------------------------------------------------------------------------
+export const PRIMERA_GENERACION = [
+  {
+    id: "chesnel-alberon-dervil-arroyo",
+    nombre: "Chesnel Alberon Dervil Arroyo",
+    cargo: "Integrante de la primera generación",
+    foto: "chesnel.alberon.dervil.arroyo.jpg",
+  },
+  {
+    id: "jose-miguel-andrade-lora",
+    nombre: "José Miguel Andrade Lora",
+    cargo: "Integrante de la primera generación",
+    foto: "jose.miguel.andrade.lora.jpg",
+  },
+  {
+    id: "maria-de-los-angeles-caraveo-leyva",
+    nombre: "María de los Ángeles Caraveo Leyva",
+    cargo: "Integrante de la primera generación",
+    foto: "maria.de.los.angeles.caraveo.leyva.jpg",
+  },
+  {
+    id: "luis-angel-gutierrez-solorzano",
+    nombre: "Luis Ángel Gutiérrez Solórzano",
+    cargo: "Integrante de la primera generación",
+    foto: "luis.angel.gutierrez.solorzano.jpg",
+  },
+  {
+    id: "jose-daniel-roche-garcia",
+    nombre: "José Daniel Roche García",
+    cargo: "Integrante de la primera generación",
+    foto: "jose.daniel.roche.garcia.jpg",
+  },
+  {
+    id: "juan-antonio-hernandez-cadenas",
+    nombre: "Juan Antonio Hernández Cadenas",
+    cargo: "Integrante de la primera generación",
+    foto: "juan.antonio.hernandez.cadenas.jpg",
+  },
+  {
+    id: "irene-del-carmen-castaneda-luna",
+    nombre: "Irene del Carmen Castañeda Luna",
+    cargo: "Integrante de la primera generación",
+    foto: "irene.del.carmen.castaneda.luna.jpg",
+  },
+  {
+    id: "sergio-quiroz",
+    nombre: "Dr. Sergio Quiroz Gómez",
+    cargo: "Integrante de la primera generación",
+    foto: "sergio.quiroz.jpg",
+  },
+  {
+    id: "ernesto-chale",
+    nombre: "Alejandro Ernesto Chale de la Cruz",
+    cargo: "Integrante de la primera generación",
+    foto: "ernesto.chale.jpg",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// GALERÍA
+// ---------------------------------------------------------------------------
 export const GALERIA = [
   {
     id: "g1",
@@ -178,6 +254,10 @@ export const GALERIA = [
     pie: "Ceremonia del Programa de Mentorías Médico Cirujano DACS-UJAT",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// DIRECTORIO DE MENTORES
+// ---------------------------------------------------------------------------
 export const MENTORES = [
   {
     id: "directorio-1",
@@ -205,28 +285,38 @@ export const MENTORES = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// ACTIVIDADES
+// ---------------------------------------------------------------------------
 export const ACTIVIDADES = [
   {
     id: "curso-espirometria",
     titulo: "Interpretación de una espirometría",
     fecha: "05 de noviembre de 2026",
-    hora: "12:00 P.M",
-    lugar: "Aula de simulación DACS, a un costado de la coordinación de Médico Cirujano",
+    hora: "12:00 P.M.",
+    lugar:
+      "Aula de simulación DACS, a un costado de la coordinación de Médico Cirujano",
     descripcion:
       "Aprende a interpretar los resultados de una espirometría y su importancia en la práctica clínica. Este taller está dirigido a estudiantes de medicina y profesionales de la salud interesados en mejorar sus habilidades en la evaluación respiratoria.",
   },
 ];
 
+// ---------------------------------------------------------------------------
+// PARTICIPAR
+// ---------------------------------------------------------------------------
 export const PARTICIPAR = {
   mentorado: {
     descripcion:
       "Recibe acompañamiento académico de mentores de semestres avanzados.",
-    enlace: "https://docs.google.com/forms/d/e/1FAIpQLSdzWVvlHDdI0kp6yt97Qs_U53iXutUJQAdq5VJWT7ZavO_oUQ/viewform",
+    enlace:
+      "https://docs.google.com/forms/d/e/1FAIpQLSdzWVvlHDdI0kp6yt97Qs_U53iXutUJQAdq5VJWT7ZavO_oUQ/viewform",
   },
   mentor: {
     descripcion:
       "Comparte tu experiencia y apoya a los estudiantes de nuevo ingreso.",
-      Registro: "https://forms.gle/7cGEFhf3jFhnif5k8",
-      Descripción: "no te quedes fuera de esta gran oportunidad de formar parte del Programa de Mentores DACS y contribuir al desarrollo académico de los estudiantes de nuevo ingreso. Regístrate como mentor y comparte tu experiencia y conocimientos para guiar a la próxima generación de profesionales de la salud."
+    enlace: "https://forms.gle/7cGEFhf3jFhnif5k8",
+    detalle:
+      "No te quedes fuera de esta gran oportunidad de formar parte del Programa de Mentores DACS y contribuir al desarrollo académico de los estudiantes de nuevo ingreso. Regístrate como mentor y comparte tu experiencia y conocimientos para guiar a la próxima generación de profesionales de la salud.",
   },
 };
+

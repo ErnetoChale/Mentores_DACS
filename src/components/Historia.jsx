@@ -1,9 +1,15 @@
+
 import React, { useState } from 'react';
-import { HISTORIA, FUNDADORES, GALERIA } from '../data/mentoresData';
+import {
+  HISTORIA,
+  FUNDADORES,
+  PRIMERA_GENERACION,
+  GALERIA,
+} from '../data/mentoresData';
 
 const TITULOS = /^(dr|dra|mtro|mtra|lic|ing|prof)\.?$/i;
 
-const iniciales = (nombre) =>
+const iniciales = (nombre = '') =>
   nombre
     .split(' ')
     .filter((palabra) => palabra && !TITULOS.test(palabra))
@@ -12,7 +18,7 @@ const iniciales = (nombre) =>
     .join('')
     .toUpperCase();
 
-// Muestra la foto; si el archivo no existe todavía, muestra las iniciales.
+// Muestra la fotografía o, si no está disponible, las iniciales.
 function FotoPersona({ persona, base }) {
   const [fallo, setFallo] = useState(false);
 
@@ -36,23 +42,45 @@ function FotoPersona({ persona, base }) {
 }
 
 export default function Historia() {
-  const destacado = HISTORIA.destacado;
-  const parrafos = HISTORIA.parrafos || [];
-  const hitos = HISTORIA.hitos || [];
-  const hayTexto = Boolean(destacado) || parrafos.length > 0 || hitos.length > 0;
+  const destacado = HISTORIA?.destacado;
+  const parrafos = HISTORIA?.parrafos || [];
+  const hitos = HISTORIA?.hitos || [];
 
-  if (!hayTexto && !FUNDADORES.length && !GALERIA.length) return null;
+  const hayTexto =
+    Boolean(destacado) || parrafos.length > 0 || hitos.length > 0;
 
   const base = import.meta.env.BASE_URL;
 
+  // Evita repetir a los fundadores en la primera generación.
+  const idsFundadores = ['sergio-quiroz', 'ernesto-chale'];
+
+  const primeraGeneracion = PRIMERA_GENERACION.filter(
+    (persona) => !idsFundadores.includes(persona.id)
+  );
+
+  if (
+    !hayTexto &&
+    !FUNDADORES.length &&
+    !primeraGeneracion.length &&
+    !GALERIA.length
+  ) {
+    return null;
+  }
+
   return (
-    <section id="historia" className="scroll-mt-24 py-16 sm:py-20 border-t border-stone-200">
+    <section
+      id="historia"
+      className="scroll-mt-24 py-16 sm:py-20 border-t border-stone-200"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+
+        {/* HISTORIA DEL PROGRAMA */}
         {hayTexto && (
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
               Nuestra historia
             </p>
+
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 leading-tight">
               Historia del programa
             </h2>
@@ -65,10 +93,12 @@ export default function Historia() {
                       {destacado.etiqueta}
                     </p>
                   )}
+
                   <p className="font-heading font-extrabold text-8xl sm:text-[9rem] leading-[0.9] mt-2">
                     {destacado.anio}
                   </p>
                 </div>
+
                 {destacado.frase && (
                   <p className="font-serif italic text-2xl sm:text-3xl leading-snug text-white/95 border-l-4 border-accent pl-6">
                     “{destacado.frase}”
@@ -81,8 +111,11 @@ export default function Historia() {
               <div className="mt-12 grid gap-12 lg:grid-cols-3">
                 {parrafos.length > 0 && (
                   <div className="lg:col-span-2 space-y-5">
-                    {parrafos.map((parrafo) => (
-                      <p key={parrafo} className="text-lg text-stone-700 leading-relaxed">
+                    {parrafos.map((parrafo, index) => (
+                      <p
+                        key={`${index}-${parrafo}`}
+                        className="text-lg text-stone-700 leading-relaxed"
+                      >
                         {parrafo}
                       </p>
                     ))}
@@ -95,8 +128,8 @@ export default function Historia() {
                       parrafos.length ? '' : 'lg:col-span-3'
                     }`}
                   >
-                    {hitos.map((hito) => (
-                      <li key={`${hito.anio}-${hito.texto}`}>
+                    {hitos.map((hito, index) => (
+                      <li key={`${hito.anio}-${index}`}>
                         <p className="font-heading text-2xl font-bold text-brand leading-none">
                           {hito.anio}
                         </p>
@@ -112,30 +145,38 @@ export default function Historia() {
           </div>
         )}
 
+        {/* FUNDADORES Y RESPONSABLES */}
         {FUNDADORES.length > 0 && (
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
               Quiénes lo hicieron posible
             </p>
+
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 leading-tight">
               Fundadores y responsables
             </h2>
 
             <ul className="mt-10 grid gap-10 lg:grid-cols-2">
               {FUNDADORES.map((persona) => (
-                <li key={persona.id} className="flex gap-5 sm:gap-6 border-t-4 border-accent pt-5">
+                <li
+                  key={persona.id}
+                  className="flex gap-5 sm:gap-6 border-t-4 border-accent pt-5"
+                >
                   <div className="w-28 sm:w-44 shrink-0 aspect-[4/5] bg-stone-200 overflow-hidden">
                     <FotoPersona persona={persona} base={base} />
                   </div>
+
                   <div className="min-w-0">
                     <h3 className="font-heading text-xl sm:text-2xl font-semibold text-ink leading-snug">
                       {persona.nombre}
                     </h3>
+
                     {persona.cargo && (
                       <p className="text-sm font-semibold text-brand mt-1.5 leading-snug">
                         {persona.cargo}
                       </p>
                     )}
+
                     {persona.descripcion && (
                       <p className="mt-3 text-base text-stone-600 leading-relaxed">
                         {persona.descripcion}
@@ -148,11 +189,62 @@ export default function Historia() {
           </div>
         )}
 
+        {/* PRIMERA GENERACIÓN */}
+        {primeraGeneracion.length > 0 && (
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
+              Generación inaugural
+            </p>
+
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 leading-tight">
+              Primera generación
+            </h2>
+
+            <p className="mt-4 text-base sm:text-lg text-stone-600 leading-relaxed max-w-3xl">
+              Integrantes que formaron parte de la primera generación del
+              Programa de Mentorías de Médico Cirujano de la DACS-UJAT.
+            </p>
+
+            <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {primeraGeneracion.map((persona) => (
+                <li
+                  key={persona.id}
+                  className="border-t-4 border-accent pt-5"
+                >
+                  <div className="aspect-[4/5] bg-stone-200 overflow-hidden">
+                    <FotoPersona persona={persona} base={base} />
+                  </div>
+
+                  <div className="mt-4">
+                    <h3 className="font-heading text-lg sm:text-xl font-semibold text-ink leading-snug">
+                      {persona.nombre}
+                    </h3>
+
+                    {persona.cargo && (
+                      <p className="text-sm font-semibold text-brand mt-1.5 leading-snug">
+                        {persona.cargo}
+                      </p>
+                    )}
+
+                    {persona.descripcion && (
+                      <p className="mt-3 text-sm text-stone-600 leading-relaxed">
+                        {persona.descripcion}
+                      </p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* GALERÍA */}
         {GALERIA.length > 0 && (
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-brand-light">
               En imágenes
             </p>
+
             <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-2 leading-tight">
               Galería
             </h2>
@@ -164,11 +256,15 @@ export default function Historia() {
                     <div className="aspect-[4/3] bg-stone-200 overflow-hidden">
                       <img
                         src={`${base}images/galeria/${imagen.foto}`}
-                        alt={imagen.pie || 'Fotografía del programa de mentores'}
+                        alt={
+                          imagen.pie ||
+                          'Fotografía del Programa de Mentorías'
+                        }
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
+
                     {imagen.pie && (
                       <figcaption className="mt-2 text-sm text-stone-600 leading-snug">
                         {imagen.pie}
@@ -180,6 +276,7 @@ export default function Historia() {
             </ul>
           </div>
         )}
+
       </div>
     </section>
   );

@@ -1,9 +1,11 @@
 
 import ImagenAmpliable from "./ImagenAmpliable";
 import { ACTIVIDADES } from "../data/mentoresData";
+import { ExternalLink, ClipboardList } from "lucide-react";
 
 export default function Actividades() {
   const imagenActividad = `${import.meta.env.BASE_URL}images/actividades/taller-espirometria.jpg`;
+  const registroUrl = "https://forms.gle/G6MG2oNeCBoTfWgu7";
 
   return (
     <section
@@ -11,7 +13,6 @@ export default function Actividades() {
       className="border-t border-stone-200 bg-stone-50 py-16 sm:py-20"
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Encabezado */}
         <div className="mb-10 max-w-3xl">
           <span className="text-sm font-semibold uppercase tracking-[0.18em] text-brand">
             Formación académica
@@ -27,7 +28,6 @@ export default function Actividades() {
           </p>
         </div>
 
-        {/* Tarjetas */}
         {ACTIVIDADES.length > 0 ? (
           <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
             {ACTIVIDADES.map((actividad) => (
@@ -38,19 +38,23 @@ export default function Actividades() {
                 {/* Imagen ampliable */}
                 <div className="relative h-56 overflow-hidden bg-stone-100">
                   <ImagenAmpliable
-                    src={imagenActividad}
+                    src={actividad.imagen || imagenActividad}
                     alt={actividad.titulo}
                     className="h-full w-full"
                     imageClassName="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                    loading="eager"
+                    loading="lazy"
                   />
 
-                  <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-brand shadow-sm pointer-events-none">
+                  <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-brand shadow-sm">
                     Taller académico
+                  </span>
+
+                  <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/65 px-3 py-1.5 text-xs font-medium text-white">
+                    Ver imagen ampliada
                   </span>
                 </div>
 
-                {/* Información */}
+                {/* Información de la actividad */}
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
                   <h3 className="text-xl font-bold leading-snug text-ink">
                     {actividad.titulo}
@@ -118,6 +122,23 @@ export default function Actividades() {
                   <p className="mt-4 flex-1 text-sm leading-7 text-stone-600">
                     {actividad.descripcion}
                   </p>
+
+                  {/* Inscripción */}
+                  <div className="mt-6 border-t border-stone-100 pt-5">
+                    <a
+                      href={registroUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+                    >
+                      <ClipboardList size={18} />
+                      Inscribirme
+                      <ExternalLink size={15} />
+                    </a>
+                    <p className="mt-2 text-center text-xs text-stone-500">
+                      El formulario se abrirá en una nueva pestaña.
+                    </p>
+                  </div>
                 </div>
               </article>
             ))}
@@ -136,3 +157,4 @@ export default function Actividades() {
     </section>
   );
 }
+
