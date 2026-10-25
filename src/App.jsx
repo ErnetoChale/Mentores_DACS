@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import ManualesList from './components/ManualesList';
 import Footer from './components/Footer';
+import Historia from './components/Historia';
 import Actividades from './components/Actividades';
 import Mentores from './components/Mentores';
 import Videos from './components/Videos';
@@ -136,6 +137,7 @@ export default function App() {
           </div>
         </section>
 
+        <Historia />
         <Actividades />
         <Mentores />
         <Videos />

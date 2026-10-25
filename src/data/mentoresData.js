@@ -1,3 +1,4 @@
+
 export const PROGRAMA_INFO = {
   titulo: "Programa de Mentores DACS",
   universidad: "Universidad Juárez Autónoma de Tabasco",
@@ -23,8 +24,6 @@ export const driveView = (urlOrId) =>
 export const driveDownload = (urlOrId) =>
   `https://drive.google.com/uc?export=download&id=${getDriveId(urlOrId)}`;
 
-// Cómo agregar un manual: copia el enlace de "Compartir" del archivo en Drive
-// (con acceso "Cualquier persona con el enlace") y pégalo en "driveId".
 export const MANUALES = [
   {
     id: "1",
@@ -32,6 +31,7 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "Irene del Carmen Castañeda Luna, Karla del Socorro Celorio Gómez, Alejandro Ernesto Chale de la Cruz, Crystell Guadalupe Guzmán Priego, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
+    registro: "03-2026-010814421000-01",
     driveId:
       "https://drive.google.com/file/d/1TwHF5l0nC5NL_a2dThS3hWq9Oz2Benm3/view?usp=sharing",
   },
@@ -41,6 +41,7 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "José Daniel Roche García, Karla del Socorro Celorio Méndez, Alejandro Ernesto Chale de la Cruz, Crystell Guadalupe Guzmán Priego, Joshua Javier Hidalgo Hernández, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
+    registro: "03-2026-010814394500-01.",
     driveId:
       "https://drive.google.com/file/d/1tcaZa7ylIFpOvPn5zSu9YczhpEvOWdA6/view?usp=sharing",
   },
@@ -50,6 +51,7 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "Irene del Carmen Castañeda Luna, Karla del Socorro Celorio Gómez, Alejandro Ernesto Chale de la Cruz, Crystell Guadalupe Guzmán Priego, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
+    registro: "03-2026-010911183600-01",
     driveId:
       "https://drive.google.com/file/d/1cCD5XIohg4zzg_TXr6sghS7hwVl67jjj/view?usp=sharing",
   },
@@ -59,9 +61,9 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "Alejandro Ernesto Chale de la Cruz, Karla del Socorro Celorio Gómez, Crystell Guadalupe Guzmán Priego, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
-    // OJO: este enlace es el mismo que el de "Estuche de disección". Reemplázalo por el de este manual.
+    registro: "03-2026-010911215609-01",
     driveId:
-      "https://drive.google.com/file/d/1cCD5XIohg4zzg_TXr6sghS7hwVl67jjj/view?usp=sharing",
+      "https://drive.google.com/file/d/1H9gYp_wbqPQq0xt6-JG8AUprCE-0pxrj/view?usp=sharing",
   },
   {
     id: "5",
@@ -69,33 +71,33 @@ export const MANUALES = [
     categoria: "Mentorías DACS",
     autores:
       "Juan Antonio Hernández Cadenas, Lluvia Paola Pulido Ortiz, Karla del Socorro Celorio Méndez, Alejandro Ernesto Chale de la Cruz, Crystell Guadalupe Guzmán Priego, Sergio Quiroz Gómez y Cristian Adrián Romero Mendoza.",
+    registro: "03-2026-010910185709-01",
     driveId:
       "https://drive.google.com/file/d/1IYeqDPuJNRQcJ06k6SOYzOQyCsIo3Ioc/view?usp=sharing",
   },
 ];
 
 // ---------------------------------------------------------------------------
-// CONTACTO: aparece en el pie de página y en el menú. Deja vacío lo que no uses.
+// CONTACTO
 // ---------------------------------------------------------------------------
 export const CONTACTO = {
-  correo: "",
-  telefono: "",
-  direccion: "",
+  correo: "mentoriasdacsmed@gmail.com",
+  direccion: "Av. Coronel Gregorio Méndez Magaña #2838-A, Col. Tamulté, C.P. 86150, Villahermosa, Tabasco, México.",
 };
 
 // ---------------------------------------------------------------------------
-// REDES SOCIALES: pega el enlace completo de cada perfil.
-// Las que dejes vacías no se muestran.
-// Ejemplo: instagram: "https://www.instagram.com/tu_usuario"
+// REDES SOCIALES
 // ---------------------------------------------------------------------------
 export const REDES = {
-  youtube: "",
-  instagram: "",
-  facebook: "",
+  youtube: "https://www.youtube.com/@Mentor%C3%ADasDACS-UJAT",
+  instagram: "https://www.instagram.com/mentores_dacs/",
+  facebook:
+    "https://www.facebook.com/p/Mentor%C3%ADas-M%C3%A9dico-Cirujano-DACS-61570120989971/",
 };
 
-// Obtiene el ID de un video a partir de cualquier enlace de YouTube
-// (watch?v=, youtu.be/, embed/ o shorts/) o del ID directo.
+// ---------------------------------------------------------------------------
+// YOUTUBE: obtiene el ID de un video a partir de su enlace o ID directo.
+// ---------------------------------------------------------------------------
 export const getYoutubeId = (urlOrId) => {
   if (!urlOrId) return "";
   const match = urlOrId.match(
@@ -104,63 +106,127 @@ export const getYoutubeId = (urlOrId) => {
   return match ? match[1] : urlOrId;
 };
 
-// ---------------------------------------------------------------------------
-// VIDEOS: si la lista está vacía, la sección no aparece.
-// "url" acepta el enlace del video de YouTube tal cual lo copias.
-//
-// Ejemplo:
-//  {
-//    id: "v1",
-//    titulo: "Introducción a la disección",
-//    descripcion: "Material de apoyo para las prácticas.",
-//    url: "https://www.youtube.com/watch?v=XXXXXXXXXXX",
-//  },
-// ---------------------------------------------------------------------------
-export const VIDEOS = [];
+// Obtiene el ID de una lista de reproducción.
+export const getYoutubeListId = (urlOrId) => {
+  if (!urlOrId) return "";
+  const match = urlOrId.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+  return match ? match[1] : urlOrId;
+};
 
 // ---------------------------------------------------------------------------
-// MENTORES: si la lista está vacía, la sección no aparece en el sitio.
-// Las fotos van en public/images/mentores/ (por ejemplo "ernesto.jpg").
-// Si no pones foto, se muestran las iniciales.
-//
-// Ejemplo (quita las // para usarlo):
-//  {
-//    id: "m1",
-//    nombre: "Nombre Apellido",
-//    semestre: "6.º semestre",
-//    area: "Anatomía y disección",
-//    foto: "nombre.jpg",
-//  },
+// VIDEOS
 // ---------------------------------------------------------------------------
-export const MENTORES = [];
+export const VIDEOS = [
+  {
+    id: "curso-introduccion-medicina",
+    titulo: "Curso de introducción a la medicina",
+    descripcion: "Serie de videos del canal Mentorías DACS-UJAT.",
+    lista: "https://youtube.com/playlist?list=PLfxTL4EbiZaY&si=zas6kwcF8HPeVMmq",
+  },
+];
 
 // ---------------------------------------------------------------------------
-// ACTIVIDADES: si la lista está vacía, la sección no aparece.
-// La fecha va en formato AAAA-MM-DD. Se ordenan solas por fecha.
-//
-// Ejemplo:
-//  {
-//    id: "a1",
-//    titulo: "Taller de disección de ojo",
-//    fecha: "2026-11-12",
-//    hora: "10:00 h",
-//    lugar: "Anfiteatro de la DACS",
-//    descripcion: "Práctica guiada por los mentores del programa.",
-//  },
+// HISTORIA DEL PROGRAMA
 // ---------------------------------------------------------------------------
-export const ACTIVIDADES = [];
+export const HISTORIA = {
+  destacado: {
+    etiqueta: "Todo comenzó en",
+    anio: "2024",
+    frase:
+      "Un proyecto nacido para que nadie recorra solo los primeros pasos de la medicina.",
+  },
+  parrafos: [
+    "En 2024 nació el Programa de Mentores DACS con una idea sencilla y ambiciosa: que la experiencia de quienes ya recorrieron el camino sirva de guía a quienes apenas lo comienzan.",
+    "Desde entonces, el programa ha crecido hasta convertirse en una comunidad que enseña, comparte y publica: manuales, videos y cursos que acompañan a los estudiantes de ciencias de la salud en su formación.",
+  ],
+  hitos: [],
+};
 
-// ---------------------------------------------------------------------------
-// PARTICIPAR: pega aquí el enlace de tu formulario (Google Forms, por ejemplo).
-// Si dejas ambos enlaces vacíos, la sección no aparece.
-// ---------------------------------------------------------------------------
+export const FUNDADORES = [
+  {
+    id: "sergio-quiroz",
+    nombre: "Dr. Sergio Quiroz Gómez",
+    cargo: "Responsable de Acreditación Médica · Profesor investigador",
+    descripcion:
+      "Responsable del proceso de acreditación médica y profesor investigador. Participa en el programa como coautor de sus manuales operativos.",
+    foto: "sergio.quiroz.jpg",
+  },
+  {
+    id: "ernesto-chale",
+    nombre: "Alejandro Ernesto Chale de la Cruz",
+    cargo: "Cofundador del programa",
+    descripcion:
+      "Cofundador del Programa de Mentores DACS y coautor de sus manuales operativos.",
+    foto: "ernesto.chale.jpg",
+  },
+];
+
+export const GALERIA = [
+  {
+    id: "g1",
+    foto: "diseccion-corazon.jpg",
+    pie: "Práctica académica de disección de corazón",
+  },
+  {
+    id: "g2",
+    foto: "diseccion-piel.jpg",
+    pie: "Práctica académica de disección de piel",
+  },
+  {
+    id: "g3",
+    foto: "ceremonia.jpg",
+    pie: "Ceremonia del Programa de Mentorías Médico Cirujano DACS-UJAT",
+  },
+];
+export const MENTORES = [
+  {
+    id: "directorio-1",
+    nombre: "Directorio 1",
+    area: "Directorio de mentores",
+    foto: "directorio1.jpg",
+  },
+  {
+    id: "directorio-2",
+    nombre: "Directorio 2",
+    area: "Directorio de mentores",
+    foto: "directorio2.jpg",
+  },
+  {
+    id: "directorio-3",
+    nombre: "Directorio 3",
+    area: "Directorio de mentores",
+    foto: "directorio3.jpg",
+  },
+  {
+    id: "directorio-4",
+    nombre: "Directorio 4",
+    area: "Directorio de mentores",
+    foto: "directorio4.jpg",
+  },
+];
+
+export const ACTIVIDADES = [
+  {
+    id: "curso-espirometria",
+    titulo: "Interpretación de una espirometría",
+    fecha: "05 de noviembre de 2026",
+    hora: "12:00 P.M",
+    lugar: "Aula de simulación DACS, a un costado de la coordinación de Médico Cirujano",
+    descripcion:
+      "Aprende a interpretar los resultados de una espirometría y su importancia en la práctica clínica. Este taller está dirigido a estudiantes de medicina y profesionales de la salud interesados en mejorar sus habilidades en la evaluación respiratoria.",
+  },
+];
+
 export const PARTICIPAR = {
   mentorado: {
-    descripcion: "Recibe acompañamiento académico de mentores de semestres avanzados.",
-    enlace: "",
+    descripcion:
+      "Recibe acompañamiento académico de mentores de semestres avanzados.",
+    enlace: "https://docs.google.com/forms/d/e/1FAIpQLSdzWVvlHDdI0kp6yt97Qs_U53iXutUJQAdq5VJWT7ZavO_oUQ/viewform",
   },
   mentor: {
-    descripcion: "Comparte tu experiencia y apoya a los estudiantes de nuevo ingreso.",
-    enlace: "",
+    descripcion:
+      "Comparte tu experiencia y apoya a los estudiantes de nuevo ingreso.",
+      Registro: "https://forms.gle/7cGEFhf3jFhnif5k8",
+      Descripción: "no te quedes fuera de esta gran oportunidad de formar parte del Programa de Mentores DACS y contribuir al desarrollo académico de los estudiantes de nuevo ingreso. Regístrate como mentor y comparte tu experiencia y conocimientos para guiar a la próxima generación de profesionales de la salud."
   },
 };
