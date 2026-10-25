@@ -183,25 +183,25 @@ export const MENTORES = [
     id: "directorio-1",
     nombre: "Directorio 1",
     area: "Directorio de mentores",
-    foto: "directorio1.jpg",
+    foto: "mentores/directorio1.jpg",
   },
   {
     id: "directorio-2",
     nombre: "Directorio 2",
     area: "Directorio de mentores",
-    foto: "directorio2.jpg",
+    foto: "mentores/directorio2.jpg",
   },
   {
     id: "directorio-3",
     nombre: "Directorio 3",
     area: "Directorio de mentores",
-    foto: "directorio3.jpg",
+    foto: "mentores/directorio3.jpg",
   },
   {
     id: "directorio-4",
     nombre: "Directorio 4",
     area: "Directorio de mentores",
-    foto: "directorio4.jpg",
+    foto: "mentores/directorio4.jpg",
   },
 ];
 

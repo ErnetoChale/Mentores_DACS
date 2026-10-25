@@ -9,7 +9,6 @@ import {
   MENTORES,
   VIDEOS,
   PARTICIPAR,
-  CONTACTO,
 } from '../data/mentoresData';
 
 const hayHistoria =
@@ -19,89 +18,128 @@ const hayHistoria =
   FUNDADORES.length > 0 ||
   GALERIA.length > 0;
 
-// Solo aparecen en el menú las secciones que tienen contenido.
 const ENLACES = [
-  { href: '#inicio', etiqueta: 'Inicio' },
-  { href: '#programa', etiqueta: 'El programa' },
-  hayHistoria && { href: '#historia', etiqueta: 'Historia' },
-  ACTIVIDADES.length > 0 && { href: '#actividades', etiqueta: 'Actividades' },
-  MENTORES.length > 0 && { href: '#mentores', etiqueta: 'Mentores' },
-  VIDEOS.length > 0 && { href: '#videos', etiqueta: 'Videos' },
-  { href: '#manuales', etiqueta: 'Manuales' },
-  (PARTICIPAR.mentorado.enlace || PARTICIPAR.mentor.enlace) && {
-    href: '#participar',
+  { id: 'inicio', etiqueta: 'Inicio' },
+  { id: 'programa', etiqueta: 'El programa' },
+  hayHistoria && { id: 'historia', etiqueta: 'Historia' },
+  ACTIVIDADES.length > 0 && { id: 'actividades', etiqueta: 'Actividades' },
+  MENTORES.length > 0 && { id: 'mentores', etiqueta: 'Mentores' },
+  VIDEOS.length > 0 && { id: 'videos', etiqueta: 'Videos' },
+  { id: 'manuales', etiqueta: 'Manuales' },
+  (PARTICIPAR.mentorado?.enlace || PARTICIPAR.mentor?.enlace) && {
+    id: 'participar',
     etiqueta: 'Participa',
-  },
-  (CONTACTO.correo || CONTACTO.telefono || CONTACTO.direccion) && {
-    href: '#contacto',
-    etiqueta: 'Contacto',
   },
 ].filter(Boolean);
 
-export default function Navbar() {
+export default function Navbar({ activeTab, onNavigate }) {
   const [abierto, setAbierto] = useState(false);
   const logo = `${import.meta.env.BASE_URL}images/logo.png`;
 
+  const navegar = (id) => {
+    onNavigate(id);
+    setAbierto(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const enlaceClase = (id) =>
+    `whitespace-nowrap text-sm font-semibold py-2 border-b-2 transition-colors ${
+      activeTab === id
+        ? 'text-brand border-accent'
+        : 'text-ink border-transparent hover:text-brand hover:border-accent'
+    }`;
+
   return (
     <>
-      {/* Franja institucional */}
       <div className="bg-brand-dark text-white text-xs">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 min-h-9 flex items-center justify-between gap-4">
           <span className="tracking-wide">{PROGRAMA_INFO.universidad}</span>
-          <span className="hidden sm:block text-white/80">{PROGRAMA_INFO.institucion}</span>
+          <span className="hidden sm:block text-white/80">
+            {PROGRAMA_INFO.institucion}
+          </span>
         </div>
       </div>
 
-      <header className="sticky top-0 z-50 bg-white border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
-          <a href="#inicio" className="flex items-center gap-4 min-w-0" aria-label="Ir al inicio">
-            <img src={logo} alt="Logo del Programa de Mentores DACS" className="h-14 w-auto shrink-0" />
-            <span className="border-l border-stone-300 pl-4 leading-tight min-w-0">
-              <span className="block font-heading text-xl font-bold text-brand whitespace-nowrap">
+      <header className="sticky top-0 z-50 bg-white border-b border-stone-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-20 flex items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={() => navegar('inicio')}
+            className="flex items-center gap-3 min-w-0 text-left"
+            aria-label="Ir al inicio"
+          >
+            <img
+              src={logo}
+              alt="Logo del Programa de Mentorías DACS"
+              className="h-12 sm:h-14 w-auto shrink-0"
+            />
+            <span className="border-l border-stone-300 pl-3 leading-tight">
+              <span className="block font-heading text-lg sm:text-xl font-bold text-brand whitespace-nowrap">
                 Mentores DACS
               </span>
-              {/* En pantallas grandes la división ya aparece en la franja de arriba */}
               <span className="block lg:hidden text-xs text-stone-500">
                 {PROGRAMA_INFO.institucion}
               </span>
             </span>
-          </a>
+          </button>
 
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-5" aria-label="Navegación principal">
+          <nav
+            className="hidden lg:flex items-center gap-3 xl:gap-5"
+            aria-label="Navegación principal"
+          >
             {ENLACES.map((enlace) => (
-              <a
-                key={enlace.href}
-                href={enlace.href}
-                className="whitespace-nowrap text-sm font-semibold text-ink hover:text-brand py-2 border-b-2 border-transparent hover:border-accent transition-colors"
+              <button
+                key={enlace.id}
+                type="button"
+                onClick={() => navegar(enlace.id)}
+                aria-current={activeTab === enlace.id ? 'page' : undefined}
+                className={enlaceClase(enlace.id)}
               >
                 {enlace.etiqueta}
-              </a>
+              </button>
             ))}
           </nav>
 
           <button
             type="button"
-            className="lg:hidden p-2 text-ink"
+            className="lg:hidden p-2 text-ink rounded-md hover:bg-stone-100"
             onClick={() => setAbierto(!abierto)}
             aria-label={abierto ? 'Cerrar menú' : 'Abrir menú'}
             aria-expanded={abierto}
           >
-            {abierto ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {abierto ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
         {abierto && (
-          <nav className="lg:hidden border-t border-stone-200 bg-white" aria-label="Navegación móvil">
+          <nav
+            className="lg:hidden border-t border-stone-200 bg-white"
+            aria-label="Navegación móvil"
+          >
             <ul className="max-w-6xl mx-auto px-4 py-2">
               {ENLACES.map((enlace) => (
-                <li key={enlace.href}>
-                  <a
-                    href={enlace.href}
-                    onClick={() => setAbierto(false)}
-                    className="block py-3 text-sm font-semibold text-ink border-b border-stone-100"
+                <li key={enlace.id}>
+                  <button
+                    type="button"
+                    onClick={() => navegar(enlace.id)}
+                    aria-current={activeTab === enlace.id ? 'page' : undefined}
+                    className={`block w-full text-left py-3 text-sm font-semibold border-b border-stone-100 ${
+                      activeTab === enlace.id
+                        ? 'text-brand'
+                        : 'text-ink hover:text-brand'
+                    }`}
                   >
                     {enlace.etiqueta}
-                  </a>
+                    {activeTab === enlace.id && (
+                      <span className="ml-2 text-accent" aria-hidden="true">
+                        ●
+                      </span>
+                    )}
+                  </button>
                 </li>
               ))}
             </ul>
