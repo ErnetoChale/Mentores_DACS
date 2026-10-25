@@ -1,17 +1,32 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/images/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Portal del Programa de Mentores de la División Académica de Ciencias de la Salud (DACS), UJAT."
-    />
-    <title>Programa de Mentores DACS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,wght@1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #0a7429;
+  --color-brand-dark: #07531d;
+  --color-brand-light: #04922d;
+  --color-accent: #9dc112;
+  --color-paper: #f5f6f2;
+  --color-ink: #1c2420;
+  --font-heading: 'League Spartan', sans-serif;
+  --font-sans: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #ffffff;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}

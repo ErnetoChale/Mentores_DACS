@@ -13,6 +13,7 @@ import {
 } from '../data/mentoresData';
 
 const hayHistoria =
+  Boolean(HISTORIA.destacado) ||
   (HISTORIA.parrafos || []).length > 0 ||
   (HISTORIA.hitos || []).length > 0 ||
   FUNDADORES.length > 0 ||

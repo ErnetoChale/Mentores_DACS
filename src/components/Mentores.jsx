@@ -136,39 +136,49 @@ export const VIDEOS = [
 ];
 
 // ---------------------------------------------------------------------------
-// HISTORIA DEL PROGRAMA: si todo está vacío, la sección no aparece.
+// HISTORIA DEL PROGRAMA
+// - destacado: bloque grande con el año y una frase. Ponlo en null para ocultarlo.
 // - parrafos: cada texto entre comillas es un párrafo.
-// - hitos: línea de tiempo con año y texto.
-//
-// Ejemplo:
-//  parrafos: [
-//    "El programa nació en ... con el objetivo de ...",
-//    "Con el tiempo ...",
-//  ],
-//  hitos: [
-//    { anio: "2024", texto: "Inicio del programa." },
-//    { anio: "2025", texto: "Publicación de los primeros manuales." },
-//  ],
+// - hitos: línea de tiempo con año y texto. Ejemplo:
+//     { anio: "2025", texto: "Publicación de los primeros manuales." },
 // ---------------------------------------------------------------------------
 export const HISTORIA = {
-  parrafos: [],
+  destacado: {
+    etiqueta: "Todo comenzó en",
+    anio: "2024",
+    frase:
+      "Un proyecto nacido para que nadie recorra solo los primeros pasos de la medicina.",
+  },
+  parrafos: [
+    "En 2024 nació el Programa de Mentores DACS con una idea sencilla y ambiciosa: que la experiencia de quienes ya recorrieron el camino sirva de guía a quienes apenas lo comienzan.",
+    "Desde entonces, el programa ha crecido hasta convertirse en una comunidad que enseña, comparte y publica: manuales, videos y cursos que acompañan a los estudiantes de ciencias de la salud en su formación.",
+  ],
   hitos: [],
 };
 
 // ---------------------------------------------------------------------------
-// FUNDADORES: si la lista está vacía, no aparecen.
-// Las fotos van en public/images/fundadores/ (por ejemplo "nombre.jpg").
-// Sin foto se muestran las iniciales.
-//
-// Ejemplo:
-//  {
-//    id: "f1",
-//    nombre: "Nombre Apellido",
-//    cargo: "Fundador y coordinador",
-//    foto: "nombre.jpg",
-//  },
+// FUNDADORES Y RESPONSABLES
+// Las fotos van en public/images/fundadores/ con el mismo nombre que pongas en "foto".
+// Si la foto no existe todavía, se muestran las iniciales.
 // ---------------------------------------------------------------------------
-export const FUNDADORES = [];
+export const FUNDADORES = [
+  {
+    id: "sergio-quiroz",
+    nombre: "Dr. Sergio Quiroz Gómez",
+    cargo: "Responsable de Acreditación Médica · Profesor investigador",
+    descripcion:
+      "Responsable del proceso de acreditación médica y profesor investigador. Participa en el programa como coautor de sus manuales operativos.",
+    foto: "sergio.quiroz.jpg",
+  },
+  {
+    id: "ernesto-chale",
+    nombre: "Alejandro Ernesto Chale de la Cruz",
+    cargo: "Cofundador del programa",
+    descripcion:
+      "Cofundador del Programa de Mentores DACS y coautor de sus manuales operativos.",
+    foto: "ernesto.chale.jpg",
+  },
+];
 
 // ---------------------------------------------------------------------------
 // GALERIA: si la lista está vacía, no aparece.
